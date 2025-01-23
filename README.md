@@ -80,7 +80,7 @@ Though the following is valid:
 
 ```asm
 label:
-.word 0xFF
+.word: 0xFF
 ```
 
 Numbers are accepted in the following formats:

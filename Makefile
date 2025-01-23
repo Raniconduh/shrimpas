@@ -1,5 +1,3 @@
-.POSIX:
-
 BIN=	shrimpas
 SRC=	src/shrimpas.c src/parse.c src/opcode.c src/hashmap.c
 OBJ=	${SRC:.c=.o}
@@ -11,7 +9,7 @@ CFLAGS+=	-Iinclude
 all: ${BIN} include/*.h
 
 ${BIN}: ${OBJ}
-	${CC} ${CFLAGS} ${LSFLAGS} ${OBJ} -o $@
+	${CC} ${CFLAGS} ${LDFLAGS} ${OBJ} -o $@
 
 src/.c.o:
 	${CC} -c ${CFLAGS} $<

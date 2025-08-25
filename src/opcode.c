@@ -150,7 +150,7 @@ void get_insbin(hashmap * opmap, hashmap * regmap, line_content c, insword * ins
 	/* reg1 */
 	switch (op_bin) {
 		case OP_RET:
-			if (!strcmp(c.opcode, "RET"))
+			if (strcmp(c.opcode, "RET"))
 				insbin->binword.reg1 = BIN4(1,0,0,0);
 			else /* RETI */
 				insbin->binword.reg1 = BIN4(0,0,0,0);

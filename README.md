@@ -2,6 +2,14 @@
 
 Assembler for 16 bit SHRIMP.
 
+## Usage
+
+Enter `shrimpas FILE` to assemble `FILE` into a binary output file named
+`out.bin`.
+
+Optionally, pass the `--ascii` flag **after** the filename to output ASCII text
+into `out.bin` instead of raw binary.
+
 ## Registers
 
 The assembler defines the following register names:

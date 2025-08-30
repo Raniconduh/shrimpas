@@ -20,8 +20,10 @@ typedef struct assembled_i {
 
 hashmap * collect_labels(FILE *);
 bool islabel(char *);
+void print_ascii(FILE *, uint16_t);
 void destroy_list(assembled_i *);
 void shrimp_quit(int);
+void shrimp_help();
 
  
 static uint16_t origin = 0x0;
@@ -32,12 +34,22 @@ static hashmap * dirmap = NULL;
 static hashmap * labels = NULL;
 static assembled_i * assembly_list = NULL;
 static char * line = NULL;
+static bool ascii = false;
 
 
 int main(int argc, char ** argv) {
-	if (argc != 2) {
+	if (argc > 1 && (!strcmp(argv[1], "--help") || !strcmp(argv[1], "-h"))) {
+		shrimp_help();
+		return 0;
+	}
+
+	if (argc < 2) {
 		fputs("Invalid argument count\n", stderr);
 		return 1;
+	}
+
+	if (argc > 2 && !strcmp(argv[2], "--ascii")) {
+		ascii = true;
 	}
 
 	inputf = fopen(argv[1], "r");
@@ -271,8 +283,12 @@ int main(int argc, char ** argv) {
 	FILE * outf = fopen("out.bin", "wb");
 	for (assembled_i * i = assembly_list; i; i = i->next) {
 		uint16_t bin = OPC_BIN(i->bin);
-		fputc(((uint8_t*)(&bin))[1], outf);
-		fputc(((uint8_t*)(&bin))[0], outf);
+		if (ascii) {
+			print_ascii(outf, bin);
+		} else {
+			fputc(((uint8_t*)(&bin))[1], outf);
+			fputc(((uint8_t*)(&bin))[0], outf);
+		}
 		if (!i->bin.imm) continue;
 		uint16_t imm;
 		/* output integer value */
@@ -282,8 +298,12 @@ int main(int argc, char ** argv) {
 		} else {
 			imm = (uintptr_t)hashmap_get(labels, i->bin.label) - 1 + origin;
 		}
-		fputc(((uint8_t*)(&imm))[1], outf);
-		fputc(((uint8_t*)(&imm))[0], outf);
+		if (ascii) {
+			print_ascii(outf, imm);
+		} else {
+			fputc(((uint8_t*)(&imm))[1], outf);
+			fputc(((uint8_t*)(&imm))[0], outf);
+		}
 	}
 	fclose(outf);
 
@@ -356,6 +376,16 @@ hashmap * collect_labels(FILE * inputf) {
 }
 
 
+void print_ascii(FILE * f, uint16_t word) {
+	for (int i = 0; i < 16; i++) {
+		if (word & (1 << 15)) fputc('1', f);
+		else fputc('0', f);
+		word <<= 1;
+	}
+	fputc('\n', f);
+}
+
+
 void destroy_list(assembled_i * l) {
 	assembled_i * i = l;
 	while (i) {
@@ -375,4 +405,15 @@ void shrimp_quit(int ret) {
 	destroy_hashmap(dirmap);
 	destroy_list(assembly_list);
 	exit(ret);
+}
+
+void shrimp_help(void) {
+	puts(
+		"Usage: shrimpas <FILE> [--ascii]\n"
+		"Compile a SHRIMP assembly file into binary\n"
+		"Outputs file `out.bin'\n"
+		"\n"
+		"Options:\n"
+		"\t--ascii\tOutput is in ASCII instead of a binary"
+	);
 }

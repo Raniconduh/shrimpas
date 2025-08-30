@@ -9,30 +9,30 @@
 
 #include <stdio.h>
 
-opinfo op_ADD_info   = {OP_ADD,   2, "B",    ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_SUB_info   = {OP_SUB,   2, "B",    ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_MUL_info   = {OP_MUL,   2, "B",    ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_DIV_info   = {OP_DIV,   2, "B",    ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_SHA_info   = {OP_SHA,   2, "",     ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_MOD_info   = {OP_MOD,   2, "B",    ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_AND_info   = {OP_AND,   2, "B",    ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_OR_info    = {OP_OR,    2, "B",    ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_XOR_info   = {OP_XOR,   2, "B",    ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_NOT_info   = {OP_NOT,   2, "B",    ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_SHL_info   = {OP_SHL,   2, "",     ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_ROL_info   = {OP_ROL,   2, "",     ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_SHR_info   = {OP_SHR,   2, "",     ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_ROR_info   = {OP_ROR,   2, "",     ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_JMP_info   = {OP_JMP,   1, "NZPCO",ARG_REG | ARG_IMM, ARG_NON};
-opinfo op_CALL_info  = {OP_CALL,  1, "NZPCO",ARG_REG | ARG_IMM, ARG_NON};
-opinfo op_RET_info   = {OP_RET,   0, "",     ARG_NON, ARG_NON};
-opinfo op_RETI_info  = {OP_RETI,  0, "",     ARG_NON, ARG_NON};
-opinfo op_INT_info   = {OP_INT,   1, "",     ARG_REG | ARG_IMM, ARG_NON};
-opinfo op_MOV_info   = {OP_MOV,   2, "B",    ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_LD_info    = {OP_LD,    2, "",     ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_ST_info    = {OP_ST,    2, "",     ARG_REG, ARG_REG | ARG_IMM};
-opinfo op_LDFLG_info = {OP_LDFLG, 1, "",     ARG_REG, ARG_NON};
-opinfo op_STFLG_info = {OP_STFLG, 1, "",     ARG_REG, ARG_NON};
+opinfo op_ADD_info   = {OP_ADD,   2, "B",    ARG_REG, ARG_REG | ARG_IMM, false};
+opinfo op_SUB_info   = {OP_SUB,   2, "B",    ARG_REG, ARG_REG | ARG_IMM, false};
+opinfo op_MUL_info   = {OP_MUL,   2, "B",    ARG_REG, ARG_REG | ARG_IMM, false};
+opinfo op_DIV_info   = {OP_DIV,   2, "B",    ARG_REG, ARG_REG | ARG_IMM, false};
+opinfo op_SHA_info   = {OP_SHA,   2, "",     ARG_REG, ARG_REG | ARG_IMM, true };
+opinfo op_MOD_info   = {OP_MOD,   2, "B",    ARG_REG, ARG_REG | ARG_IMM, false};
+opinfo op_AND_info   = {OP_AND,   2, "B",    ARG_REG, ARG_REG | ARG_IMM, false};
+opinfo op_OR_info    = {OP_OR,    2, "B",    ARG_REG, ARG_REG | ARG_IMM, false};
+opinfo op_XOR_info   = {OP_XOR,   2, "B",    ARG_REG, ARG_REG | ARG_IMM, false};
+opinfo op_NOT_info   = {OP_NOT,   2, "B",    ARG_REG, ARG_REG | ARG_IMM, false};
+opinfo op_SHL_info   = {OP_SHL,   2, "",     ARG_REG, ARG_REG | ARG_IMM, true };
+opinfo op_ROL_info   = {OP_ROL,   2, "",     ARG_REG, ARG_REG | ARG_IMM, true };
+opinfo op_SHR_info   = {OP_SHR,   2, "",     ARG_REG, ARG_REG | ARG_IMM, true };
+opinfo op_ROR_info   = {OP_ROR,   2, "",     ARG_REG, ARG_REG | ARG_IMM, true };
+opinfo op_JMP_info   = {OP_JMP,   1, "NZPCO",ARG_REG | ARG_IMM, ARG_NON, false};
+opinfo op_CALL_info  = {OP_CALL,  1, "NZPCO",ARG_REG | ARG_IMM, ARG_NON, false};
+opinfo op_RET_info   = {OP_RET,   0, "",     ARG_NON, ARG_NON,           true };
+opinfo op_RETI_info  = {OP_RETI,  0, "",     ARG_NON, ARG_NON,           true };
+opinfo op_INT_info   = {OP_INT,   1, "",     ARG_REG | ARG_IMM, ARG_NON, true };
+opinfo op_MOV_info   = {OP_MOV,   2, "B",    ARG_REG, ARG_REG | ARG_IMM, false};
+opinfo op_LD_info    = {OP_LD,    2, "",     ARG_REG, ARG_REG | ARG_IMM, false};
+opinfo op_ST_info    = {OP_ST,    2, "",     ARG_REG, ARG_REG | ARG_IMM, false};
+opinfo op_LDFLG_info = {OP_LDFLG, 1, "",     ARG_REG, ARG_NON,           true};
+opinfo op_STFLG_info = {OP_STFLG, 1, "",     ARG_REG, ARG_NON,           true};
 
 dirinfo dir_ORIGIN_info = {DIR_ORIGIN, 1, ARG_NUM};
 dirinfo dir_WORD_info   = {DIR_WORD,   1, ARG_NUM};

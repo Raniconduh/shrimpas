@@ -123,7 +123,8 @@ int main(int argc, char ** argv) {
 				}
 				
 				/* fix label offsets */
-				if (c.arg1 && (arg1type & ARG_IMM) || c.arg2 && (arg2type & ARG_IMM)) {
+				if (((c.arg1 && (arg1type & ARG_IMM)) || (c.arg2
+						&& (arg2type & ARG_IMM))) && !opcode_info->inplace) {
 					hashmap_walk_state s = {0};
 					while (hashmap_walk(labels, &s)) {
 						if ((uintptr_t)s.val - 1 > loffset) {

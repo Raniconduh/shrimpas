@@ -65,6 +65,9 @@ typedef struct {
 
 	enum argtype arg1type;
 	enum argtype arg2type;
+
+	/* immediate argument is in the instruction word */
+	bool inplace;
 } opinfo;
 
 typedef struct {
